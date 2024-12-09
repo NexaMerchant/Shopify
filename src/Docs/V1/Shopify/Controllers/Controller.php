@@ -1,5 +1,5 @@
 <?php
-namespace Apps\Shopify\Docs\V1\Shopify\Controllers;
+namespace NexaMerchant\Shopify\Docs\V1\Shopify\Controllers;
 
 /**
  * @OA\Info(
