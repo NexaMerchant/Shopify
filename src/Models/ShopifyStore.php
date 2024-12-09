@@ -2,9 +2,6 @@
 namespace NexaMerchant\Shopify\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Webkul\Core\Eloquent\TranslatableModel;
-use Webkul\Core\Models\ChannelProxy;
-use Konekt\Concord\Proxies\ModelProxy;
 use Illuminate\Database\Eloquent\Model;
 use NexaMerchant\Shopify\Contracts\ShopifyStore as ShopifyStoreContract;
 
@@ -32,4 +29,31 @@ class ShopifyStore extends Model implements ShopifyStoreContract
         'shopify_client_secret',
         'status',
     ];
+
+    /**
+     * Get the shopify store products
+     *
+     * @return string
+     */
+    public function products() {
+        return $this->hasMany(ShopifyProduct::class);
+    }
+
+    /**
+     * Get the shopify store orders
+     *
+     * @return string
+     */
+    public function orders() {
+        return $this->hasMany(ShopifyOrder::class);
+    }
+
+    /**
+     * Get the shopify store customers
+     *
+     * @return string
+     */
+    public function customers() {
+        return $this->hasMany(ShopifyCustomer::class);
+    }
 }
