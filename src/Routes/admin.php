@@ -8,7 +8,7 @@ Route::group([
     'middleware' => ['sanctum.locale','assign_request_id'],
 ], function () {
 
-    Route::controller(ProductsController::class)->prefix('shopify')->group(function () {
+    Route::controller(ProductsController::class)->prefix('shopify/products')->group(function () {
         Route::get('', 'allResources');
 
         Route::post('', 'store');
@@ -18,12 +18,6 @@ Route::group([
         Route::put('{id}', 'update');
 
         Route::delete('{id}', 'destroy');
-
-        Route::post('mass-update', 'massUpdate');
-
-        Route::post('mass-destroy', 'massDestroy');
-
-        Route::post('quick-create', 'quickCreate');
 
         Route::get('{id}/sync', 'sync'); // sync shopify data
 
@@ -36,6 +30,10 @@ Route::group([
         Route::get('{id}/sell-points', 'sellPoints'); // sell points
 
         Route::post('{id}/sell-points', 'saveSellPoint'); // save sell point
+
+        Route::get('{id}/custom-configurations', 'CustomConfigurations'); // custom configurations
+
+        Route::post('{id}/custom-configurations', 'saveCustomConfigurations'); // save custom configurations
 
 
     });
