@@ -8,6 +8,7 @@ use NexaMerchant\Shopify\Resource\ShopifyProductResource;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redis;
+use Webkul\Product\Models\ProductAttributeValue;
 
 class ProductsController extends ShopifyController
 {
@@ -239,7 +240,7 @@ class ProductsController extends ShopifyController
 
     // Get CustomConfigurations
     public function CustomConfigurations($id) {
-        $product = $this->getRepositoryInstance()->findOrFail($id);
+        $product = $this->getRepositoryInstance()->findOneBy(["product_id"=>$id]);
         if(!$product) {
             throw new \Exception($id.' Product not found');
         }
@@ -248,13 +249,18 @@ class ProductsController extends ShopifyController
 
         $redis = Redis::connection('default');
 
-        $custom_configurations_key = "custom_configurations_".$id;
+        $localProduct = app("Webkul\Product\Repositories\ProductRepository");
+
+        $LocalProduct = $localProduct->findBySlug($id);
+
+        if(is_null($LocalProduct)) {
+            return "please import products first";
+        }
+
+        //var_dump($LocalProduct);exit;
 
         $checkoutList = [];
         foreach($checkoutItems as $key=>$item) {
-
-            // foreach codekeys and get date from redis
-
             foreach($this->codeKeys as $kk=>$value) {
                 $cachek_key = "checkout_".$item."_".$id;
                 //echo $cachek_key;
@@ -271,13 +277,52 @@ class ProductsController extends ShopifyController
                 }else{
                     $checkoutList[$key][$kk] = "";
                 }
-                //$checkoutList[$key][$kk] = $cacheData;
             }
-
         } 
 
+        $data['checkoutList'] = $checkoutList;
+
+        $sell_points_key = "sell_points_".$id;
+
+        $sell_points = $redis->hgetall($sell_points_key);
+        if(count($sell_points)==0) {
+            for($i=1;$i<=5;$i++) {
+                $redis->hset($sell_points_key, $i, "");
+            }
+        }
+        $sell_points = $redis->hgetall($sell_points_key);
+        ksort($sell_points);
+
+        $data['sell_points'] = $sell_points;
+
+        $LocalProductAttributesReporitory = app("Webkul\Product\Repositories\ProductAttributeValueRepository");
+
+        $productBgAttribute = $LocalProductAttributesReporitory->findOneWhere([
+            'product_id'   => $LocalProduct->id,
+            'attribute_id' => 29,
+        ]);
+
+
+        $productBgAttribute_mobile = $LocalProductAttributesReporitory->findOneWhere([
+            'product_id'   => $LocalProduct->id,
+            'attribute_id' => 30,
+        ]);
+
+        $productSizeImage = $LocalProductAttributesReporitory->findOneWhere([
+            'product_id'   => $LocalProduct->id,
+            'attribute_id' => 32,
+        ]);
+
+        // products display image
+        $product_image_lists = Cache::get("product_image_lists_".$LocalProduct->id);
+
+        $data['productBgAttribute'] = $productBgAttribute;
+        $data['productBgAttribute_mobile'] = $productBgAttribute_mobile;
+        $data['productSizeImage'] = $productSizeImage;
+        $data['product_image_lists'] = $product_image_lists;
+
         return response()->json([
-            "data" => $checkoutList
+            "data" => $data
         ]);
 
         
@@ -300,16 +345,71 @@ class ProductsController extends ShopifyController
 
         foreach($checkoutItems as $key=>$value) {
             $new_key = str_replace("checkoutItems[","",$key);
-            //var_dump($value, $key, $new_key);exit;
-
             $cachek_key = "checkout_".$new_key."_".$id;
-            
             $redis->set($cachek_key, json_encode($value));
-
         }
 
         //exit;
-        
+
+        $sell_points = $request->input('sell_points');
+
+        $sell_points_key = "sell_points_".$id;
+        $sell_points = $request->input('sell_points');
+        foreach($sell_points as $key=>$value) {
+            $redis->hset($sell_points_key, $key, $value);
+        }
+
+        $LocalProduct = app("Webkul\Product\Repositories\ProductRepository");
+        $LocalProduct = $LocalProduct->findBySlug($id);
+        $LocalProductAttributesReporitory = app("Webkul\Product\Repositories\ProductAttributeValueRepository");
+
+        $file = $request->file('pc_banner');
+        if(!empty($file)) {
+            $fileName = $file->getClientOriginalName();
+            $filePath = $file->store('product/'.$LocalProduct->id, "public");
+            
+            if(!empty($filePath)) {
+                $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 29)->first();
+                if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
+                $productBgAttribute->product_id = $LocalProduct->id;
+                $productBgAttribute->attribute_id = 29;
+                $productBgAttribute->text_value = $filePath;
+                $productBgAttribute->save();
+
+            }
+        }
+
+        $file2 = $request->file('mobile_bg');
+        if(!empty($file2)) {
+            $fileName = $file2->getClientOriginalName();
+            $filePath = $file2->store('product/'.$LocalProduct->id, "public");
+            
+            if(!empty($filePath)) {
+                $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 30)->first();
+                if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
+                $productBgAttribute->product_id = $LocalProduct->id;
+                $productBgAttribute->attribute_id = 30;
+                $productBgAttribute->text_value = $filePath;
+                $productBgAttribute->save();
+
+            }
+        }
+
+        $file3 = $request->file('product_size');
+        if(!empty($file3)) {
+            $fileName = $file3->getClientOriginalName();
+            $filePath = $file3->store('product/'.$LocalProduct->id, "public");
+            
+            if(!empty($filePath)) {
+                $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 32)->first();
+                if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
+                $productBgAttribute->product_id = $LocalProduct->id;
+                $productBgAttribute->attribute_id = 32;
+                $productBgAttribute->text_value = $filePath;
+                $productBgAttribute->save();
+            }
+        }
+
         \Nicelizhi\Shopify\Helpers\Utils::clearCache($product->id, $id);
 
         return response()->json([
@@ -318,4 +418,6 @@ class ProductsController extends ShopifyController
         ]);
 
     }
+
+    
 }

@@ -23,13 +23,13 @@ Route::group([
 
         Route::get('{id}/clean-cache', 'cleanCache'); // clean cache
 
-        Route::get('{id}/ad-images', 'adImages'); // ad images
+        // Route::get('{id}/ad-images', 'adImages'); // ad images
 
-        Route::post('{id}/ad-images', 'saveAdImage'); // save ad image
+        // Route::post('{id}/ad-images', 'saveAdImage'); // save ad image
 
-        Route::get('{id}/sell-points', 'sellPoints'); // sell points
+        // Route::get('{id}/sell-points', 'sellPoints'); // sell points
 
-        Route::post('{id}/sell-points', 'saveSellPoint'); // save sell point
+        // Route::post('{id}/sell-points', 'saveSellPoint'); // save sell point
 
         Route::get('{id}/custom-configurations', 'CustomConfigurations'); // custom configurations
 
