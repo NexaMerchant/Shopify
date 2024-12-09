@@ -1,14 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use NexaMerchant\Shopify\Http\Controllers\Admin\ExampleController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\ProductsController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\CustomersController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\StoresController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\ReportsController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\SettingsController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\OrdersController;
-use NexaMerchant\Shopify\Http\Controllers\Admin\DiscountsController;
+use NexaMerchant\Shopify\Http\Controllers\Api\V1\Admin\ProductsController;
 
 Route::group([
     'prefix'     => 'api/v1/admin',
