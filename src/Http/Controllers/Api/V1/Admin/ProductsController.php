@@ -403,5 +403,20 @@ class ProductsController extends ShopifyController
 
     }
 
+    // sync product comments
+    public function syncComments($id) {
+        $product = $this->getRepositoryInstance()->findOrFail($id);
+        if(!$product) {
+            throw new \Exception($id.' Product not found');
+        }
+
+        Artisan::queue("onebuy:import:products:comment:from:judge",  ["--prod_id"=> $id])->onConnection('redis')->onQueue('shopify-comments'); // import the shopify comments
+
+        return response()->json([
+            'product_id' => $product->id,
+            'message' => "success"
+        ]);
+    }
+
     
 }

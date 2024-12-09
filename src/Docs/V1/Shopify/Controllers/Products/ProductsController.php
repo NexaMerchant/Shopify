@@ -140,4 +140,93 @@ class ProductsController {
      */
     public function saveCustomConfigurations() {
     }
+
+    /**
+     * @OA\Get(
+     *      path="/shopify/products/{id}/sync-comments",
+     *      operationId="sync comments",
+     *      tags={"Shopify"},
+     *      summary="Sync shopify comments data",
+     *      description="Sync shopify comments data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Product id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *       )
+     * )
+     */
+    public function syncComments()
+    {
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/shopify/products/{id}/clean-cache",
+     *      operationId="cleanCache",
+     *      tags={"Shopify"},
+     *      summary="Clean cache",
+     *      description="Clean cache",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Product id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *       )
+     * )
+     */
+    public function cleanCache() {}
+
+    /**
+     * @OA\Get(
+     *      path="/shopify/products/{id}/sync",
+     *      operationId="sync",
+     *      tags={"Shopify"},
+     *      summary="Sync shopify data",
+     *      description="Sync shopify data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Product id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
+     *       ),
+     *       @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *       )
+     * )
+     */
+    public function sync() {}
 }

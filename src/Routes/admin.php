@@ -21,6 +21,8 @@ Route::group([
 
         Route::get('{id}/sync', 'sync'); // sync shopify data
 
+        Route::get('{id}/sync-comments', 'syncComments'); // sync shopify product comments data
+
         Route::get('{id}/clean-cache', 'cleanCache'); // clean cache
 
         // Route::get('{id}/ad-images', 'adImages'); // ad images
