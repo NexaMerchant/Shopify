@@ -75,6 +75,10 @@ class ShopifyServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/Shopify.php', 'Shopify'
         );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/l5-swagger.php', 'l5-swagger.documentations'
+        );
         
     }
 
