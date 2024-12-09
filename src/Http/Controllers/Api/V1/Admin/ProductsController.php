@@ -330,7 +330,7 @@ class ProductsController extends ShopifyController
 
     // Save CustomConfigurations
     public function saveCustomConfigurations($id, Request $request) {
-        $product = $this->getRepositoryInstance()->findOrFail($id);
+        $product = $this->getRepositoryInstance()->findOneBy(["product_id"=>$id]);
         if(is_null($product)) {
             return "please import products first";
         }
