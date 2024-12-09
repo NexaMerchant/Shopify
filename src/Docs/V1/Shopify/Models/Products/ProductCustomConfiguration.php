@@ -14,7 +14,7 @@ class ProductCustomConfiguration {
      *     title="checkoutItems",
      *     description="Product checkout items configuration",
      *     format="string",
-     *     example="[]"
+     *     example="{}"
      * )
      *
      * @var string
@@ -26,7 +26,7 @@ class ProductCustomConfiguration {
      *     title="sellPoints",
      *     description="Product sell points configuration",
      *     format="string",
-     *     example="[]"
+     *     example="{}"
      * 
      * )
      *
