@@ -7,6 +7,6 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        return response()->json(['message' => 'OrdersController@index']);
+        
     }
 }
