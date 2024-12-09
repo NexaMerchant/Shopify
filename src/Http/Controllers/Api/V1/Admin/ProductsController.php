@@ -242,7 +242,7 @@ class ProductsController extends ShopifyController
     public function CustomConfigurations($id) {
         $product = $this->getRepositoryInstance()->findOneBy(["product_id"=>$id]);
         if(!$product) {
-            throw new \Exception($id.' Product not found');
+           return throw new \Exception($id.' Product not found');
         }
 
         $checkoutItems = \Nicelizhi\Shopify\Helpers\Utils::getAllCheckoutVersion();
@@ -332,7 +332,7 @@ class ProductsController extends ShopifyController
     public function saveCustomConfigurations($id, Request $request) {
         $product = $this->getRepositoryInstance()->findOneBy(["product_id"=>$id]);
         if(is_null($product)) {
-            return "please import products first";
+            return throw new \Exception($id.' Product not found');
         }
 
         $redis = Redis::connection('default');
