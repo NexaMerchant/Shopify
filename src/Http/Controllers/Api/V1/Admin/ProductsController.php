@@ -363,51 +363,35 @@ class ProductsController extends ShopifyController
         $LocalProduct = $LocalProduct->findBySlug($id);
         $LocalProductAttributesReporitory = app("Webkul\Product\Repositories\ProductAttributeValueRepository");
 
-        $file = $request->file('pc_banner');
+        $file = $request->input('pc_banner');
         if(!empty($file)) {
-            $fileName = $file->getClientOriginalName();
-            $filePath = $file->store('product/'.$LocalProduct->id, "public");
-            
-            if(!empty($filePath)) {
-                $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 29)->first();
-                if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
-                $productBgAttribute->product_id = $LocalProduct->id;
-                $productBgAttribute->attribute_id = 29;
-                $productBgAttribute->text_value = $filePath;
-                $productBgAttribute->save();
-
-            }
+            $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 29)->first();
+            if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
+            $productBgAttribute->product_id = $LocalProduct->id;
+            $productBgAttribute->attribute_id = 29;
+            $productBgAttribute->text_value = $file;
+            $productBgAttribute->save();
         }
 
-        $file2 = $request->file('mobile_bg');
+        $file2 = $request->input('mobile_bg');
         if(!empty($file2)) {
-            $fileName = $file2->getClientOriginalName();
-            $filePath = $file2->store('product/'.$LocalProduct->id, "public");
-            
-            if(!empty($filePath)) {
-                $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 30)->first();
-                if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
-                $productBgAttribute->product_id = $LocalProduct->id;
-                $productBgAttribute->attribute_id = 30;
-                $productBgAttribute->text_value = $filePath;
-                $productBgAttribute->save();
+            $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 30)->first();
+            if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
+            $productBgAttribute->product_id = $LocalProduct->id;
+            $productBgAttribute->attribute_id = 30;
+            $productBgAttribute->text_value = $file2;
+            $productBgAttribute->save();
 
-            }
         }
 
-        $file3 = $request->file('product_size');
+        $file3 = $request->input('product_size');
         if(!empty($file3)) {
-            $fileName = $file3->getClientOriginalName();
-            $filePath = $file3->store('product/'.$LocalProduct->id, "public");
-            
-            if(!empty($filePath)) {
-                $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 32)->first();
-                if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
-                $productBgAttribute->product_id = $LocalProduct->id;
-                $productBgAttribute->attribute_id = 32;
-                $productBgAttribute->text_value = $filePath;
-                $productBgAttribute->save();
-            }
+            $productBgAttribute = ProductAttributeValue::where("product_id", $LocalProduct->id)->where("attribute_id", 32)->first();
+            if(is_null($productBgAttribute)) $productBgAttribute = new ProductAttributeValue();
+            $productBgAttribute->product_id = $LocalProduct->id;
+            $productBgAttribute->attribute_id = 32;
+            $productBgAttribute->text_value = $file3;
+            $productBgAttribute->save();
         }
 
         \Nicelizhi\Shopify\Helpers\Utils::clearCache($product->id, $id);
