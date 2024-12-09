@@ -13,10 +13,11 @@ class ProductCustomConfiguration {
      * @OA\Property(
      *     title="checkoutItems",
      *     description="Product checkout items configuration",
-     *     format="array",
+     *     format="string",
+     *     example="[]"
      * )
      *
-     * @var array
+     * @var string
      */
     private $checkoutItems;
 
@@ -24,10 +25,12 @@ class ProductCustomConfiguration {
      * @OA\Property(
      *     title="sellPoints",
      *     description="Product sell points configuration",
-     *     format="array",
+     *     format="string",
+     *     example="[]"
+     * 
      * )
      *
-     * @var array
+     * @var string
      */
     private $sell_points;
 
@@ -35,10 +38,10 @@ class ProductCustomConfiguration {
      * @OA\Property(
      *     title="pcBanner",
      *     description="Product PC banner configuration",
-     *     format="file",
+     *     format="string",
      * )
      *
-     * @var file
+     * @var string
      */
     private $pc_banner;
 
@@ -46,10 +49,10 @@ class ProductCustomConfiguration {
      * @OA\Property(
      *     title="mobile_bg",
      *     description="Product mobile banner configuration",
-     *     format="file",
+     *     format="string",
      * )
      *
-     * @var file
+     * @var string
      */
     private $mobile_bg;
 
@@ -57,10 +60,10 @@ class ProductCustomConfiguration {
      * @OA\Property(
      *     title="product_size",
      *     description="Product images configuration",
-     *     format="file",
+     *     format="string",
      * )
      *
-     * @var file
+     * @var string
      */
     private $product_size;
 }
