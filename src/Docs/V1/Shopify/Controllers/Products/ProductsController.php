@@ -79,8 +79,8 @@ class ProductsController {
     }
 
     /**
-     * @OA\Put(
-     *      path="/shopify/products/{id}",
+     * @OA\Get(
+     *      path="/shopify/products/{id}/custom-configurations",
      *      operationId="updateProduct",
      *      tags={"Shopify"},
      *      summary="Update existing product",
@@ -114,7 +114,7 @@ class ProductsController {
 
     /**
      * @OA\Post(
-     *      path="/shopify/products/{id}",
+     *      path="/shopify/products/{id}/custom-configurations",
      *      operationId="saveCustomConfigurations",
      *      tags={"Shopify"},
      *      summary="Save customer configuration for product",
