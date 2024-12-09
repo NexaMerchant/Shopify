@@ -12,7 +12,7 @@ class ProductsController {
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Products")
+     *          @OA\JsonContent(ref="#/components/schemas/Product")
      *       ),
      *       @OA\Response(
      *          response=400,
