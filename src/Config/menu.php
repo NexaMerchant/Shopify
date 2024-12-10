@@ -4,13 +4,6 @@ return [
      * Shopify Dashboard.
      */
     [
-        'key'        => 'Shopify',
-        'name'       => 'Shopify::app.Admin.Shopify.demo',
-        'route'      => 'Shopify.admin.example.demo',
-        'sort'       => 1,
-        'icon'       => 'icon-dashboard',
-    ],
-    [
         'key'        => 'Shopify.Settings',
         'name'       => 'Shopify::app.Admin.Shopify.settings',
         'route'      => 'Shopify.admin.settings.index',
