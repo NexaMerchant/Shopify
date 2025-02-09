@@ -22,7 +22,7 @@ class Post extends Command
      *
      * @var string
      */
-    protected $signature = 'shopify:order:post {--order_id=}';
+    protected $signature = 'Shopify:order:post {--order_id=}';
 
     /**
      * The console command description.
@@ -88,8 +88,6 @@ class Post extends Command
             $lists = [];
             //$lists = Order::where(['status'=>'processing'])->orderBy("updated_at", "desc")->select(['id'])->limit(100)->get();
         }
-        
-
         //$this->checkLog();
 
         foreach($lists as $key=>$list) {
@@ -102,29 +100,6 @@ class Post extends Command
 
         
     }
-
-    /**
-     * 
-     * check the today log file
-     * 
-     */
-
-     public function checkLog() {
-
-        //return false;
-       // use grep command to gerneter new log file
-
-       $yesterday = date("Y-m-d", strtotime('-1 days'));
-
-       $big_log_file = storage_path('logs/laravel-'.$yesterday.'.log');
-       $error_log_file = storage_path('logs/error-'.$yesterday.'.log');
-       echo $big_log_file."\r\n";
-       echo $error_log_file."\r\n";
-
-       if(!file_exists($error_log_file)) exec("cat ".$big_log_file." | grep SQLSTATE >".$error_log_file);
-       
-
-     }
 
     /**
      * 
@@ -197,6 +172,9 @@ class Post extends Command
             $line_item ['quantity'] = $product['qty_ordered'];
             $q_ty += $product['qty_ordered'];
             $line_item ['requires_shipping'] = true;
+
+            // add sku info
+            $line_item['sku'] = $sku['product_sku'];
 
             array_push($line_items, $line_item);
         }

@@ -85,8 +85,6 @@ class Create extends Command
         }
         
 
-        $this->checkLog();
-
         foreach($lists as $key=>$list) {
             $this->info("start post order " . $list->id);
             $this->postOrder($list->id, $shopifyStore);
@@ -98,28 +96,6 @@ class Create extends Command
         
     }
 
-    /**
-     * 
-     * check the today log file
-     * 
-     */
-
-     public function checkLog() {
-
-        //return false;
-       // use grep command to gerneter new log file
-
-       $yesterday = date("Y-m-d", strtotime('-1 days'));
-
-       $big_log_file = storage_path('logs/laravel-'.$yesterday.'.log');
-       $error_log_file = storage_path('logs/error-'.$yesterday.'.log');
-       echo $big_log_file."\r\n";
-       echo $error_log_file."\r\n";
-
-       if(!file_exists($error_log_file)) exec("cat ".$big_log_file." | grep SQLSTATE >".$error_log_file);
-       
-
-     }
 
     /**
      * 

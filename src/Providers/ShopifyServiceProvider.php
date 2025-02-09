@@ -94,6 +94,7 @@ class ShopifyServiceProvider extends ServiceProvider
             $this->commands([
                 \NexaMerchant\Shopify\Console\Commands\Install::class,
                 \NexaMerchant\Shopify\Console\Commands\UnInstall::class,
+                \NexaMerchant\Shopify\Console\Commands\Order\Post::class,
             ]);
         }
     }
