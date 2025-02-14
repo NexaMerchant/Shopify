@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redis;
 use Webkul\Product\Models\ProductAttributeValue;
+use Webkul\Product\Repositories\ProductRepository;
 
 class ProductsController extends ShopifyController
 {
@@ -21,7 +22,7 @@ class ProductsController extends ShopifyController
 
     public function repository()
     {
-        return ShopifyProductRepository::class;
+        return ProductRepository::class;
     }
 
     public function resource()
@@ -240,10 +241,6 @@ class ProductsController extends ShopifyController
 
     // Get CustomConfigurations
     public function CustomConfigurations($id) {
-        $product = $this->getRepositoryInstance()->findOneBy(["product_id"=>$id]);
-        if(!$product) {
-           return throw new \Exception($id.' Product not found');
-        }
 
         $checkoutItems = \Nicelizhi\Shopify\Helpers\Utils::getAllCheckoutVersion();
 
@@ -330,10 +327,6 @@ class ProductsController extends ShopifyController
 
     // Save CustomConfigurations
     public function saveCustomConfigurations($id, Request $request) {
-        $product = $this->getRepositoryInstance()->findOneBy(["product_id"=>$id]);
-        if(is_null($product)) {
-            return throw new \Exception($id.' Product not found');
-        }
 
         $redis = Redis::connection('default');
         
@@ -394,7 +387,7 @@ class ProductsController extends ShopifyController
             $productBgAttribute->save();
         }
 
-        \Nicelizhi\Shopify\Helpers\Utils::clearCache($product->id, $id);
+        \Nicelizhi\Shopify\Helpers\Utils::clearCache($LocalProduct->id, $id);
 
         return response()->json([
             'product_id' => $id,

@@ -318,7 +318,7 @@ class Post extends Command
          * 
          */
 
-        $postOrder['send_receipt'] = false;  // 
+        $postOrder['send_receipt'] = false;
         //$postOrder['send_receipt'] = true; 
 
         // $postOrder['discount_codes'] = $discount_codes;
