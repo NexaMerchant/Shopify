@@ -95,6 +95,7 @@ class ShopifyServiceProvider extends ServiceProvider
                 \NexaMerchant\Shopify\Console\Commands\Install::class,
                 \NexaMerchant\Shopify\Console\Commands\UnInstall::class,
                 \NexaMerchant\Shopify\Console\Commands\Order\Post::class,
+                \NexaMerchant\Shopify\Console\Commands\Product\CopyFromShopify::class,
             ]);
         }
     }
